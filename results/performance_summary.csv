@@ -1,0 +1,5 @@
+"Method","Time","Speedup","Time_saved","Efficiency"
+"Serial",4.19,1,0,16.67
+"furrr",2.71,1.55,1.48,25.77
+"future",1.47,2.85,2.72,47.51
+"parallel",1.28,3.27,2.91,54.56

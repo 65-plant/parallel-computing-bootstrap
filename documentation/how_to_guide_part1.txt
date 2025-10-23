@@ -1,0 +1,49 @@
+
+# HOW-TO GUIDE: Parallel Computing for Bootstrap Analysis in R
+Author: Mitra Aftabi | Date: 2025
+
+================================================================================
+TABLE OF CONTENTS
+================================================================================
+1. Introduction
+2. Quick Start  
+3. Method Comparisons
+4. When to Use Which Method
+5. Troubleshooting
+6. Best Practices
+
+================================================================================
+1. INTRODUCTION
+================================================================================
+
+This guide shows how to speed up bootstrap analyses using parallel computing.
+
+WHY PARALLEL COMPUTING?
+- Bootstrap requires many independent replicates (1000-10000+)
+- Each replicate runs independently = perfect for parallelization
+- With 6 CPU cores, get 2-5x speedup!
+
+REQUIREMENTS:
+- R version >= 4.0
+- Multi-core CPU (4+ cores recommended)
+- Packages: furrr, future, future.apply
+
+================================================================================
+2. QUICK START
+================================================================================
+
+## Install Packages
+install.packages('furrr')
+install.packages('future')  
+install.packages('future.apply')
+
+## Basic Example
+library(furrr)
+plan(multisession, workers = 4)  # Use 4 cores
+
+# Your function runs automatically in parallel!
+results <- future_map(1:10, function(i) {
+  # Your analysis here
+  mean(rnorm(1000))
+})
+

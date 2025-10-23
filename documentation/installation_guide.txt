@@ -1,0 +1,57 @@
+
+# INSTALLATION GUIDE
+# Parallel Computing for Plant Phenotype Bootstrap Analysis
+
+## Required Packages
+
+### Core Packages (Must Install)
+install.packages('agridat')      # Agricultural datasets
+install.packages('boot')         # Bootstrap methods
+install.packages('tidyverse')    # Data manipulation
+
+### Parallel Computing Packages
+install.packages('furrr')        # Future + purrr (easiest)
+install.packages('future')       # Parallel framework
+install.packages('future.apply') # For future_lapply
+
+### Note: parallel package comes with R (no installation needed)
+
+## System Requirements
+- R version >= 4.0
+- Multi-core CPU (4+ cores recommended)
+- 8GB RAM minimum
+- Works on: Windows, Mac, Linux
+
+## Installation Test
+# Verify all packages loaded successfully:
+library(agridat)
+library(boot)
+library(tidyverse)
+library(furrr)
+library(future)
+library(future.apply)
+library(parallel)
+
+# Check available cores
+detectCores()
+
+## Quick Start Example
+library(furrr)
+plan(multisession, workers = 4)  # Use 4 cores
+
+# Your parallel code here...
+# Example:
+results <- future_map(1:10, ~mean(rnorm(1000)))
+
+## Recommendations by Workload
+- Small tasks (< 5 items): Use 'future' (lowest overhead)
+- Medium tasks (5-10 items): Use 'furrr' (best balance)
+- Large tasks (10+ items): Use 'furrr' (best scaling)
+- No dependencies needed: Use 'parallel' (built-in)
+
+## Troubleshooting
+- Windows users: All methods work! Use parLapply for parallel package
+- Mac/Linux users: All methods work, can also use mclapply
+- Memory issues: Reduce number of workers
+- Slow performance: Increase bootstrap replicates (need more work per task)
+

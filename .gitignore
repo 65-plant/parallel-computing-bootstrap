@@ -1,0 +1,28 @@
+# R History files
+.Rhistory
+.RData
+.Rproj.user/
+
+# RStudio files
+*.Rproj
+
+# Temporary files
+*~
+.DS_Store
+Thumbs.db
+
+# Windows specific
+desktop.ini
+
+# Large result files (optional - uncomment if files are too big)
+# results/*.rds
+
+
+# Word documents
+*.docx
+~$*.docx
+
+# Extra plots (keep only in figures/)
+Rplot*.pdf
+Rplot*.png
+

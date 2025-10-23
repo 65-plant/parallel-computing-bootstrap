@@ -1,0 +1,98 @@
+
+================================================================================
+4. WHEN TO USE WHICH METHOD
+================================================================================
+
+DECISION FRAMEWORK:
+
+Number of Tasks | Best Method    | Expected Speedup
+----------------|----------------|------------------
+1-2 tasks       | Serial (no parallel) | Overhead > benefit
+3-5 tasks       | future         | 1.4x - 5.7x
+5-10 tasks      | furrr          | 2.5x - 3.0x  
+10+ tasks       | furrr          | 2.5x - 3.0x
+
+BOOTSTRAP REPLICATES MATTER!
+- 1000 reps: May see NO speedup
+- 5000 reps: Good speedup (2-5x)
+- 10000 reps: Best speedup (3-6x)
+
+Rule: Need enough work per task to overcome overhead
+
+================================================================================
+5. TROUBLESHOOTING
+================================================================================
+
+## Problem: Parallel is SLOWER than serial
+Cause: Not enough work per task
+Solution: Increase bootstrap replicates to 5000-10000
+
+## Problem: Cannot find function future_lapply
+Cause: Package not loaded
+Solution: library(future.apply)
+
+## Problem: Results not reproducible  
+Cause: No seed set
+Solution: Use .options = furrr_options(seed = 123)
+
+## Problem: Out of memory
+Cause: Too many workers
+Solution: Reduce workers or process in batches
+
+## Problem: Code hangs
+Cause: Error in bootstrap function
+Solution: Test function serially first before parallelizing
+
+================================================================================
+6. BEST PRACTICES
+================================================================================
+
+1. TEST SERIAL FIRST
+   Make sure code works before parallelizing
+
+2. LEAVE CORES FOR SYSTEM
+   plan(multisession, workers = detectCores() - 2)
+
+3. SET SEED FOR REPRODUCIBILITY
+   .options = furrr_options(seed = 123)
+
+4. MONITOR PERFORMANCE
+   Use tictoc package to measure speedup
+
+5. START SMALL
+   Test with 3-5 items before scaling up
+
+6. HANDLE ERRORS
+   Use possibly() to catch errors gracefully
+
+7. DOCUMENT YOUR CHOICE
+   Add comments explaining method selection
+
+================================================================================
+PERFORMANCE RESULTS FROM OUR PROJECT
+================================================================================
+
+Test: 5 genotypes, 5000 bootstrap replicates each
+
+Method   | Time  | Speedup | When to Use
+---------|-------|---------|-------------
+Serial   | 4.19s | 1.00x   | Baseline
+furrr    | 2.71s | 1.55x   | 5+ tasks
+future   | 1.47s | 2.85x   | 3-10 tasks (WINNER!)
+parallel | 1.28s | 3.27x   | No dependencies
+
+SCALABILITY SWEET SPOT:
+5 genotypes with future = 5.71x speedup!
+
+================================================================================
+RESOURCES
+================================================================================
+
+Package Documentation:
+- furrr: https://furrr.futureverse.org/
+- future: https://future.futureverse.org/  
+- parallel: ?parallel
+
+Author: Mitra Aftabi
+Project: Parallel Computing for Plant Phenotype Bootstrap Analysis
+

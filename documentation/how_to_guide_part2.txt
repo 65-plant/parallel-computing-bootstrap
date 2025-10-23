@@ -1,0 +1,79 @@
+
+================================================================================
+3. METHOD COMPARISONS
+================================================================================
+
+## METHOD 1: furrr (EASIEST - RECOMMENDED FOR BEGINNERS)
+
+### Pros
+- Tidyverse-style syntax
+- Easiest to learn
+- Works great for 5+ tasks
+
+### Example
+library(furrr)
+plan(multisession, workers = 4)
+
+results <- future_map(
+  my_groups,
+  function(g) analyze_function(g),
+  .options = furrr_options(seed = 123)
+)
+
+### Best For
+- 5-15 tasks
+- Tidyverse users
+- Learning parallel computing
+
+================================================================================
+
+## METHOD 2: future (BEST PERFORMANCE)
+
+### Pros
+- Lowest overhead
+- Best performance (up to 5.7x speedup in our tests!)
+- Very flexible
+
+### Example
+library(future)
+library(future.apply)
+plan(multisession, workers = 4)
+
+results <- future_lapply(
+  my_groups,
+  function(g) analyze_function(g),
+  future.seed = 123
+)
+
+### Best For
+- 3-10 tasks (sweet spot!)
+- Maximum performance needed
+- Production code
+
+================================================================================
+
+## METHOD 3: parallel (NO INSTALLATION NEEDED)
+
+### Pros
+- Built into R
+- No package installation
+- Works everywhere
+
+### Example (Windows)
+library(parallel)
+cl <- makeCluster(4)
+clusterExport(cl, c('data', 'functions'))
+clusterEvalQ(cl, library(boot))
+
+results <- parLapply(cl, my_groups, analyze_function)
+stopCluster(cl)  # Important!
+
+### Example (Mac/Linux)
+library(parallel)
+results <- mclapply(my_groups, analyze_function, mc.cores = 4)
+
+### Best For
+- Cannot install packages
+- HPC/cluster environments
+- Need maximum control
+
