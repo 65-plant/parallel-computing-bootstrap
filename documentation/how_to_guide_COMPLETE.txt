@@ -43,7 +43,7 @@ plan(multisession, workers = 4)  # Use 4 cores
 
 # Function runs automatically in parallel!
 results <- future_map(1:10, function(i) {
-  # Analysis code here
+  # Analysis code
   mean(rnorm(1000))
 })
 
