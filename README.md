@@ -105,9 +105,9 @@ library(boot)
 # Set up parallel processing
 plan(multisession, workers = 4)
 
-# Your analysis function
+# Analysis function
 analyze_item <- function(item) {
-  # Your bootstrap code here
+  # Bootstrap code
   boot_result <- boot(data, statistic_function, R = 5000)
   return(boot_result)
 }
