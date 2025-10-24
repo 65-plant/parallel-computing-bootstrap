@@ -41,9 +41,9 @@ install.packages('future.apply')
 library(furrr)
 plan(multisession, workers = 4)  # Use 4 cores
 
-# Your function runs automatically in parallel!
+# Function runs automatically in parallel!
 results <- future_map(1:10, function(i) {
-  # Your analysis here
+  # Analysis code here
   mean(rnorm(1000))
 })
 
