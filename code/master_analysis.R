@@ -2,6 +2,7 @@
 # PARALLEL COMPUTING FOR BOOTSTRAP ANALYSIS
 # Master Analysis Script
 # ==============================================================================
+# Updated: October 2025
 # Author: Mitra Aftabi
 # Supervisor: Dr. Andreas Busjahn
 # Institution: CQ Beratung+Bildung GmbH - Berlin
