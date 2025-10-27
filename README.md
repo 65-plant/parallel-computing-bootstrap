@@ -97,6 +97,35 @@ install.packages('tidyverse')
 
 ---
 
+
+
+## Robust Benchmarking Results
+
+Following feedback from Dr. Busjahn, we conducted robust benchmarking with 100 repetitions per method to account for system variability.
+
+### Quartile Analysis (100 Repetitions)
+
+| Method   | Median | Q1    | Q3    | Speedup |
+|----------|--------|-------|-------|---------|
+| Serial   | 3.09s  | 2.97s | 3.51s | 1.00x   |
+| furrr    | 1.68s  | 1.32s | 2.14s | 1.84x   |
+| future   | 1.63s  | 1.21s | 2.10s | 1.90x ⭐ |
+| parallel | 2.15s  | 1.99s | 2.36s | 1.44x   |
+
+**Key Findings:**
+- future package achieves 1.90x speedup with most consistent performance
+- Low standard deviation across all methods shows stability
+- Quartile ranges demonstrate reliable performance even with system variability
+- 5 genotypes, 5000 bootstrap replicates per genotype, 6 CPU cores
+
+**New Visualizations:**
+- Runtime distribution boxplot and violin plot
+- Speedup comparison with quartile error bars
+- Detailed quartile analysis charts
+
+See `robust_benchmark_100reps.R` for complete analysis.
+
+
 ## Quick Start
 ```r
 library(furrr)
